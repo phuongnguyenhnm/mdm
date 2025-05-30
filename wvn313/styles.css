@@ -1,0 +1,148 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf') format('truetype');
+    font-weight: 100;
+    font-style: normal;
+}
+
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #2f3b4c;
+    color: #fff;
+    text-align: center;
+	margin: 0;
+        height: 100vh;
+        background-image: url('bg.png'); /* Thay đường dẫn và tên hình ảnh tại đây */
+        background-size: cover; /* Để hình ảnh phủ toàn bộ trang */
+        background-position: center; /* Đặt hình ảnh ở giữa */
+        display: flex;
+	align-items: flex-start;
+	justify-content: flex-start;
+	overflow: hidden;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard syntax */
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    padding-top: 33px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.yellow-box {
+        background-color: #EABC42;
+	width: 295px;
+    	height: 70px;
+	position: relative;
+ 	border-radius: 8px;
+ 	display: flex;
+ 	justify-content: center;
+    	align-items: center;
+        border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+.yellow-box::before,
+.yellow-box::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    background-color: #38394C; /* Màu nền */
+    top: 100%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
+
+.yellow-box::before {
+    left: 0;
+    margin-left: -5px; /* Đặt vị trí khuyết bên trái */
+}
+
+.yellow-box::after {
+    right: 0;
+    margin-right: -5px; /* Đặt vị trí khuyết bên phải */
+}
+
+
+.header {
+	margin-bottom: 25px;
+	color: #FFEDAE;
+	font-size: 12px;
+}
+
+.qr-section {
+    background-color: #fff;
+    color: #000;
+    width: 295px;
+    padding-top: 20px;     /* Khoảng cách phía trên */
+    padding-bottom: 5px;  /* Khoảng cách phía dưới */  
+    border-radius: 5px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    display: flex; 
+    flex-direction: column; /* Sắp xếp theo chiều dọc */
+    align-items: center; /* Căn giữa theo chiều ngang */
+    justify-content: center;
+}
+
+
+.qr-section .time {
+	font-size: 16px;
+	margin-bottom: 6px;
+	color: #000;
+}
+
+.qr-section .rf {
+	font-size: 13px;
+	margin-bottom: 10px;
+	color: #;
+}
+
+.qr-section .qr-code img {
+    width: 240px;
+    height: 240px;
+    margin-bottom: 6px;
+}
+
+.qr-section .status {
+    color: #01CB43;
+    font-size: 18px;
+    margin-bottom: 5px;
+	animation: blink 2s steps(1) infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+}
+
+.qr-section .timer {
+    color: #01CB43;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.info {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #FDE4BB;
+    width: 80%;
+    text-align: left; /* Căn trái cho văn bản */
+    text-indent: 30px; /* Lùi đầu dòng 30px */
+}

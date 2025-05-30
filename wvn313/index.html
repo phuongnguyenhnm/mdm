@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>员工码</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="manifest" href="manifest.json" />
+    <script src="jquery.min.js"></script>
+    <script src="jquery.qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Phần tiêu đề -->
+        <div class="header">
+            <h2>
+		    <script>
+    $(document).ready(function() {
+        // Hàm để đọc nội dung từ file name.txt
+        $.ajax({
+            url: 'name.txt',
+            dataType: 'text',
+        }).done(function(data) {
+            // Cập nhật nội dung tiêu đề
+            $('.header h2').text(data.trim());
+        }).fail(function() {
+            console.error('Không thể tải file name.txt');
+        });
+
+        // Các hàm khác của bạn...
+        createQRCode();
+    });
+			</script>
+	    </h2>
+        </div>
+	<div class="yellow-box">
+            <p>将二维码对准扫描器刷码出场</p>
+        </div>
+        <!-- Phần mã QR -->
+        <div class="qr-section">
+  <p class="time" id="currentDatetime"></p>         
+  <script>
+        function updateDateTime() {
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const dateString = `${year}-${month}-${day}`;
+            const timeString = `${hours}:${minutes}:${seconds}`;
+            document.getElementById('currentDatetime').innerText = `${dateString}   ${timeString}`;
+        }
+
+        // Cập nhật ngày và giờ ngay lập tức và sau đó mỗi giây
+        updateDateTime();
+        setInterval(updateDateTime, 1000);	  
+    </script>
+	<div class="qr-code">
+	    <div id="qrcode"></div>
+	</div>
+		<div style="margin-bottom: 10px;"></div>
+	  <p class="rf" id="generate">刷新二维码</p>
+            
+		<script>
+        function generateRandomString(length = 200) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789=/\_-+';
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            return result;
+        }
+
+        function createQRCode() {
+            const randomData = generateRandomString(100); // Tạo chuỗi ngẫu nhiên 100 ký tự
+            $('#qrcode').empty(); // Xóa mã QR cũ
+            $('#qrcode').qrcode({
+                text: randomData,
+                width: 240, // Kích thước mã QR
+                height: 240,
+                render: 'image',
+                ecLevel: 'H' // Mức sửa lỗi H
+            });
+            console.log(`Mã QR đã được tạo với dữ liệu: ${randomData}`);
+        }
+
+        // Gọi hàm tạo mã QR khi trang được tải
+        $(document).ready(function() {
+            createQRCode();
+        });
+
+        // Vẫn giữ nút để tạo mã QR mới nếu cần
+        $('#generate').click(createQRCode);
+    </script>
+            <p class="status">已生效</p>
+
+
+
+
+<p class="timer" id="currentDatetime1"></p>         
+  <script>
+        function updateDateTime() {
+            const now = new Date();
+
+		// Cộng 20 giờ
+        	now.setHours(now.getHours() + 20);
+		// Trừ 20 phút
+        	now.setMinutes(now.getMinutes() - 20);
+		// Trừ 20 giây
+       		now.setSeconds(now.getSeconds() - 20);
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const dateString = `${year}-${month}-${day} `;
+            const timeString = `1${hours}:${minutes}:${seconds}`;
+            document.getElementById('currentDatetime1').innerText = `${timeString}`;
+        }
+
+        // Cập nhật ngày và giờ ngay lập tức và sau đó mỗi giây
+        updateDateTime();
+        setInterval(updateDateTime, 1000);	  
+    </script>
+
+
+		
+
+	
+        </div>
+
+        <!-- Phần thông tin -->
+        <div class="info">
+            <p>尊敬的员工您好，您已进入企业涉密区域，出于企业安全考虑，您的手机摄像头将被禁止拍摄，感谢您的配合。</p>
+        </div>
+    </div>
+	<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js').then((registration) => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            }).catch((error) => {
+                console.error('Service Worker registration failed:', error);
+            });
+        });
+    }
+	</script>
+
+
+	<script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then((registration) => {
+                        console.log('Service Worker registered with scope:', registration.scope);
+                    })
+                    .catch((error) => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
