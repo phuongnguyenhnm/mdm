@@ -44,16 +44,21 @@ body {
 }
 .yellow-box {
         background-color: #EABC42;
-	width: 295px;
+	width: 320px;
     	height: 70px;
 	position: relative;
  	border-radius: 8px;
  	display: flex;
- 	justify-content: center;
+ 	justify-content: flex-start;
     	align-items: center;
+	padding-left: 10px;
         border-radius: 5px;
 	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
+.yellow-box p {
+    text-align: left; /* Căn trái cho văn bản bên trong .yellow-box */
+    margin: 0; /* Loại bỏ margin để không có khoảng cách không mong muốn */
+}
 .yellow-box::before,
 .yellow-box::after {
     content: '';
@@ -86,8 +91,8 @@ body {
 .qr-section {
     background-color: #fff;
     color: #000;
-    width: 295px;
-    padding-top: 15px;     /* Khoảng cách phía trên */
+    width: 320px;
+    padding-top: 20px;     /* Khoảng cách phía trên */
     padding-bottom: 5px;  /* Khoảng cách phía dưới */  
     border-radius: 5px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -99,9 +104,9 @@ body {
 
 
 .qr-section .time {
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: bold;
-	margin-bottom: 6px;
+	margin-bottom: 16px;
 	color: #000;
 }
 
@@ -112,14 +117,14 @@ body {
 }
 
 .qr-section .qr-code img {
-    width: 230px;
-    height: 230px;
+    width: 240px;
+    height: 240px;
     margin-bottom: 6px;
 }
 
 .qr-section .status {
     color: #01CB43;
-    font-size: 19px;
+    font-size: 18px;
     margin-bottom: 5px;
 	animation: blink 2s steps(1) infinite;
         }
@@ -135,7 +140,7 @@ body {
 
 .qr-section .timer {
     color: #01CB43;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: bold;
     margin-bottom: 5px;
 }
