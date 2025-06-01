@@ -127,6 +127,7 @@ body {
     color: #01CB43;
     font-size: 18px;
     margin-bottom: 5px;
+	font-weight: bold;
 	animation: blink 2s steps(1) infinite;
         }
 
