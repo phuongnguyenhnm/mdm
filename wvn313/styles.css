@@ -99,7 +99,7 @@ body {
 
 
 .qr-section .time {
-	font-size: 14px;
+	font-size: 16px;
 	font-weight: bold;
 	margin-bottom: 6px;
 	color: #000;
@@ -119,7 +119,7 @@ body {
 
 .qr-section .status {
     color: #01CB43;
-    font-size: 19px;
+    font-size: 16px;
     margin-bottom: 5px;
 	 animation: fadeInOut 2s infinite;
     }
@@ -132,7 +132,7 @@ body {
 
 .qr-section .timer {
     color: #01CB43;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bold;
     margin-bottom: 5px;
 }
