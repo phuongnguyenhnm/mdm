@@ -14,10 +14,9 @@
 
 
 body {
-    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    font-family: 'Roboto', sans-serif;
     background-color: #2f3b4c;
     color: #fff;
-	font-weight: 300;
     text-align: center;
 	margin: 0;
         height: 100vh;
@@ -101,6 +100,7 @@ body {
 
 .qr-section .time {
 	font-size: 16px;
+	font-weight: bold;
 	margin-bottom: 6px;
 	color: #000;
 }
@@ -133,6 +133,7 @@ body {
 .qr-section .timer {
     color: #01CB43;
     font-size: 15px;
+    font-weight: bold;
     margin-bottom: 5px;
 }
 
