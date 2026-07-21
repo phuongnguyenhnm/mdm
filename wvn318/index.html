@@ -95,38 +95,7 @@
         // Vẫn giữ nút để tạo mã QR mới nếu cần
         $('#generate').click(createQRCode);
     </script>
-            <p class="status">已生效</p>
-
-
-
-
-<p class="timer" id="currentDatetime1"></p>         
-  <script>
-        function updateDateTime() {
-            const now = new Date();
-
-		// Cộng 20 giờ
-        	now.setHours(now.getHours() + 20);
-		// Trừ 20 phút
-        	now.setMinutes(now.getMinutes() - 20);
-		// Trừ 20 giây
-       		now.setSeconds(now.getSeconds() - 20);
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
-            const year = now.getFullYear();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-
-            const dateString = `${year}-${month}-${day} `;
-            const timeString = `20:${minutes}:${seconds}`;
-            document.getElementById('currentDatetime1').innerText = `${timeString}`;
-        }
-
-        // Cập nhật ngày và giờ ngay lập tức và sau đó mỗi giây
-        updateDateTime();
-        setInterval(updateDateTime, 1000);	  
-    </script>
+           
 
 
 		
