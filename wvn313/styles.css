@@ -110,8 +110,7 @@ body {
 
 .qr-section .status {
     color: #01CB43;
-    font-size: 18px;
-    margin-bottom: 3px;
+    font-size: 19px;
 	 animation: fadeInOut 2s infinite;
     }
 
