@@ -36,7 +36,7 @@ body {
 .yellow-box {
         background-color: #EABC42;
 	width: 295px;
-    	height: 70px;
+    	height: 72px;
 	position: relative;
  	border-radius: 8px;
  	display: flex;
@@ -91,7 +91,7 @@ body {
 
 .qr-section .time {
 	font-size: 15px;
-	margin-bottom: 6px;
+	margin-bottom: 5px;
 	color: #000;
 }
 
@@ -121,7 +121,7 @@ body {
 
 .qr-section .timer {
     color: #01CB43;
-    font-size: 17px;
+    font-size: 16px;
     margin-bottom: 5px;
 }
 
