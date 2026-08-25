@@ -8,12 +8,12 @@
     <link rel="manifest" href="manifest.json" />
     <script src="jquery.min.js"></script>
     <script src="jquery.qrcode.min.js"></script>
+
 </head>
 <body>
     <div class="container">
         <!-- Phần tiêu đề -->
         <div class="header">
-            <h2>
 		    <script>
     $(document).ready(function() {
         // Hàm để đọc nội dung từ file name.txt
@@ -22,7 +22,7 @@
             dataType: 'text',
         }).done(function(data) {
             // Cập nhật nội dung tiêu đề
-            $('.header h2').text(data.trim());
+            $('.header').text(data.trim());
         }).fail(function() {
             console.error('Không thể tải file name.txt');
         });
@@ -31,7 +31,6 @@
         createQRCode();
     });
 			</script>
-	    </h2>
         </div>
 	<div class="yellow-box">
             <p>将二维码对准扫描器刷码出场</p>
@@ -49,7 +48,7 @@
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
 
-            const dateString = `${year}-${month}-${day}`;
+            const dateString = `${year}-${month}-${day}  `;
             const timeString = `${hours}:${minutes}:${seconds}`;
             document.getElementById('currentDatetime').innerText = `${dateString}             ${timeString}`;
         }
