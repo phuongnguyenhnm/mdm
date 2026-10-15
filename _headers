@@ -1,0 +1,6 @@
+return new Response(fileContent, {
+  headers: {
+    "Content-Type": "application/x-apple-aspen-config",
+    "Content-Disposition": "attachment; filename=camera-off.mobileconfig"
+  }
+});
