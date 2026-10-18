@@ -46,7 +46,7 @@ $(document).ready(function() {
     updateStaticTimer();
     setInterval(updateStaticTimer, 1000);
 
-    // 5. Bộ đếm giây (00:00) khi đã chuyển đổi chế độ
+    // 5. Bộ đếm giây (00:00) 
     let countingSeconds = 0;
     let countingInterval = null;
     const countingTimeEl = document.getElementById('greenCountingTime');
@@ -79,6 +79,9 @@ $(document).ready(function() {
 
         if (pressTimer === null) {
             pressTimer = setTimeout(() => {
+                // Đánh dấu đã qua trạng thái chuyển đổi để ẩn giờ tĩnh và hiện bộ đếm giây
+                body.classList.add('switched-mode');
+
                 if (body.classList.contains('yellow-mode')) {
                     body.classList.remove('yellow-mode');
                     body.classList.add('green-mode');
@@ -87,7 +90,7 @@ $(document).ready(function() {
                     body.classList.add('yellow-mode');
                 }
 
-                // MỖI LẦN CHUYỂN ĐỔI (Dù sang xanh hay về vàng) ĐỀU RESET VỀ 00:00 VÀ ĐẾM LẠI
+                // MỖI KHI BẤM GIỮ CHUYỂN ĐỔI ĐỀU RESET VỀ 00:00 VÀ ĐẾM LẠI
                 startCountingTimer();
 
                 if (navigator.vibrate) {
