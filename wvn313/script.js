@@ -31,7 +31,7 @@ $(document).ready(function() {
     updateDateTime();
     setInterval(updateDateTime, 1000);
 
-    // 4. Đồng hồ thời gian tĩnh (20:xx:xx) cho trạng thái mở đầu
+    // 4. Đồng hồ thời gian tĩnh (20:xx:xx) chỉ dùng khi mở trang lần đầu
     function updateStaticTimer() {
         const now = new Date();
         now.setHours(now.getHours() + 20);
@@ -46,7 +46,7 @@ $(document).ready(function() {
     updateStaticTimer();
     setInterval(updateStaticTimer, 1000);
 
-    // 5. Bộ đếm giây (00:00) khi đã chuyển chế độ
+    // 5. Bộ đếm giây (00:00) khi đã chuyển đổi chế độ
     let countingSeconds = 0;
     let countingInterval = null;
     const countingTimeEl = document.getElementById('greenCountingTime');
@@ -87,14 +87,14 @@ $(document).ready(function() {
                     body.classList.add('yellow-mode');
                 }
 
-                // Khi chuyển đổi sẽ kích hoạt bộ đếm giây từ 00:00
+                // MỖI LẦN CHUYỂN ĐỔI (Dù sang xanh hay về vàng) ĐỀU RESET VỀ 00:00 VÀ ĐẾM LẠI
                 startCountingTimer();
 
                 if (navigator.vibrate) {
                     navigator.vibrate(200);
                 }
                 pressTimer = null;
-            }, 5000); // Giữ 5 giây
+            }, 5000); // Giữ đúng 5 giây
         }
     }
 
