@@ -4,19 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>员工码</title>
-    <!-- Gọi file CSS riêng -->
     <link rel="stylesheet" href="styles.css" />
     <link rel="manifest" href="manifest.json" />
-    <!-- Thư viện jQuery -->
     <script src="jquery.min.js"></script>
     <script src="jquery.qrcode.min.js"></script>
 </head>
-<body class="yellow-mode"> <!-- Mặc định lúc mở là chế độ Vàng -->
+<body class="yellow-mode"> <!-- Mặc định ban đầu là chế độ Vàng -->
     <div class="container">
         <!-- Phần tiêu đề -->
         <div class="header"></div>
 
-        <!-- Hộp màu (Xanh/Vàng dùng chung class green-box để giữ nguyên kích thước/spacing gốc) -->
+        <!-- Hộp màu hiển thị tiêu đề -->
         <div class="green-box">
             <span class="green-content">将二维码对准扫描器刷码进场</span>
             <span class="yellow-content">将二维码对准扫描器刷码出场</span>
@@ -30,16 +28,19 @@
                 <div id="qrcode"></div>
             </div>
 
-            <!-- Các liên kết dưới mã QR -->
-            <div class="qr-links-wrapper">
-                <span class="apply-leave-btn" id="applyLeaveBtn" style="font-size: 13px; color: #000; cursor: pointer;">申请离场</span>
-                <p class="rf" id="generate" style="margin: 0;">刷新二维码</p>
+            <!-- Khoảng cách giữ nguyên bản gốc của bạn -->
+            <div style="margin-bottom: 10px;">
+                <span class="apply-leave-btn" id="applyLeaveBtn" style="font-size: 13px; color: #000; cursor: pointer; margin-right: 15px;">申请离场</span>
+                <p class="rf" id="generate" style="display: inline-block; margin: 0; cursor: pointer;">刷新二维码</p>
             </div>
 
             <p class="status">已生效</p>
 
-            <!-- Bộ đếm thời gian -->
-            <p class="timer timer-counting" id="countingTimer">00:00</p>
+            <!-- Thời gian hiển thị lúc đầu: Giờ tĩnh (20:xx:xx) -->
+            <p class="timer timer-static" id="currentDatetime1"></p>
+
+            <!-- Thời gian hiển thị sau khi bấm giữ: Bộ đếm giây (00:00) -->
+            <p class="timer timer-counting" id="greenCountingTime">00:00</p>
         </div>
 
         <!-- Phần thông tin -->
@@ -48,10 +49,8 @@
         </div>
     </div>
 
-    <!-- Gọi file JavaScript riêng -->
     <script src="script.js"></script>
 
-    <!-- Service Worker -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
