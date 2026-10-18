@@ -13,7 +13,7 @@ $(document).ready(function() {
     createQRCode();
     $('#generate').click(createQRCode);
 
-    // 3. Đồng hồ thời gian thực trên cùng của QR
+    // 3. Đồng hồ thời gian thực ở trên cùng mã QR
     function updateDateTime() {
         const now = new Date();
         const day = String(now.getDate()).padStart(2, '0');
@@ -31,18 +31,39 @@ $(document).ready(function() {
     updateDateTime();
     setInterval(updateDateTime, 1000);
 
-    // 4. Bộ đếm giây (00:00)
-    let countingSeconds = 0;
-    const countingTimeEl = document.getElementById('countingTimer');
-    function updateCountingTimer() {
-        countingSeconds++;
-        const minutes = String(Math.floor(countingSeconds / 60)).padStart(2, '0');
-        const seconds = String(countingSeconds % 60).padStart(2, '0');
-        if (countingTimeEl) countingTimeEl.innerText = `${minutes}:${seconds}`;
+    // 4. Đồng hồ thời gian tĩnh (20:xx:xx) cho trạng thái mở đầu
+    function updateStaticTimer() {
+        const now = new Date();
+        now.setHours(now.getHours() + 20);
+        now.setMinutes(now.getMinutes() - 20);
+        now.setSeconds(now.getSeconds() - 20);
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const timeString = `20:${minutes}:${seconds}`;
+        const el = document.getElementById('currentDatetime1');
+        if (el) el.innerText = timeString;
     }
-    setInterval(updateCountingTimer, 1000);
+    updateStaticTimer();
+    setInterval(updateStaticTimer, 1000);
 
-    // 5. Logic bấm giữ màn hình 5s để chuyển đổi chế độ
+    // 5. Bộ đếm giây (00:00) khi đã chuyển chế độ
+    let countingSeconds = 0;
+    let countingInterval = null;
+    const countingTimeEl = document.getElementById('greenCountingTime');
+
+    function startCountingTimer() {
+        countingSeconds = 0;
+        if (countingTimeEl) countingTimeEl.innerText = '00:00';
+        if (countingInterval) clearInterval(countingInterval);
+        countingInterval = setInterval(() => {
+            countingSeconds++;
+            const minutes = String(Math.floor(countingSeconds / 60)).padStart(2, '0');
+            const seconds = String(countingSeconds % 60).padStart(2, '0');
+            if (countingTimeEl) countingTimeEl.innerText = `${minutes}:${seconds}`;
+        }, 1000);
+    }
+
+    // 6. Logic bấm giữ màn hình 5s chống rung tay để chuyển đổi chế độ
     let pressTimer = null;
     let startX = 0;
     let startY = 0;
@@ -66,9 +87,8 @@ $(document).ready(function() {
                     body.classList.add('yellow-mode');
                 }
 
-                // Reset bộ đếm giây về 00:00 khi chuyển đổi
-                countingSeconds = 0;
-                if (countingTimeEl) countingTimeEl.innerText = '00:00';
+                // Khi chuyển đổi sẽ kích hoạt bộ đếm giây từ 00:00
+                startCountingTimer();
 
                 if (navigator.vibrate) {
                     navigator.vibrate(200);
@@ -82,7 +102,6 @@ $(document).ready(function() {
         if (pressTimer !== null && e.touches && e.touches.length > 0) {
             const moveX = e.touches[0].clientX;
             const moveY = e.touches[0].clientY;
-            // Cho phép dịch chuyển nhỏ dưới 15px để tránh hủy nhầm do rung tay
             if (Math.abs(moveX - startX) > 15 || Math.abs(moveY - startY) > 15) {
                 cancelLongPress();
             }
@@ -118,7 +137,7 @@ function generateRandomString(length = 200) {
 function createQRCode() {
     const randomData = generateRandomString(100);
     $('#qrcode').empty();
-    $('#qrcode').qrcode({
+    $('#qrcode'].qrcode({
         text: randomData,
         width: 240,
         height: 240,
