@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>员工码</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="manifest" href="manifest.json" />
+    <script src="jquery.min.js"></script>
+    <script src="jquery.qrcode.min.js"></script>
+    <style>
+        /* CSS hỗ trợ chuyển đổi giao diện giữa chế độ Vàng và Xanh */
+        /* Định nghĩa các class tiện ích để ẩn/hiện element */
+        .show-yellow-mode, .show-green-mode { display: none; }
+        .hidden-yellow-mode, .hidden-green-mode { display: block; }
+
+        /* === TRẠNG THÁI MẶC ĐỊNH LÀ HÌNH 2 (VÀNG) === */
+        /* Hộp tiêu đề */
+        .header-box { background-color: #EABC42; } /* Màu vàng mặc định */
+        .green-box-content { display: none; } /* Giấu nội dung xanh */
+        .yellow-box-content { display: flex; justify-content: center; align-items: center; } /* Hiện nội dung vàng */
+
+        /* Các phần khác theo mặc định hình vàng */
+        .green-status-wrapper { display: none; } /* Giấu trạng thái xanh */
+        .yellow-status-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; } /* Hiện trạng thái vàng */
+
+        /* Link dưới mã QR */
+        .apply-leave-link { display: none !important; } /* Giấu link xin nghỉ vàng */
+        .refresh-qr-center { margin-bottom: 10px; text-align: center; } /* Căn giữa link làm mới */
+
+        /* === TRẠNG THÁI CHUYỂN SANG HÌNH 1 (XANH LÁ) === */
+        body.green-mode .header-box { background-color: #39A958; } /* Màu xanh */
+        body.green-mode .green-box-content { display: flex; justify-content: center; align-items: center; }
+        body.green-mode .yellow-box-content { display: none; }
+
+        body.green-mode .green-status-wrapper { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+        body.green-mode .yellow-status-wrapper { display: none; }
+
+        /* Link dưới mã QR */
+        body.green-mode .apply-leave-link { display: inline-block !important; margin-right: 20px; font-size: 13px; color: #000; cursor: pointer; }
+        body.green-mode .refresh-qr-center { display: flex; justify-content: center; align-items: center; margin-bottom: 10px; gap: 20px; }
+    </style>
+</head>
+<body class="yellow-mode"> <!-- Mặc định là chế độ Vàng khi load -->
+    <div class="container">
+        <!-- Phần tiêu đề -->
+        <div class="header">
+            <script>
+    $(document).ready(function() {$.ajax({
+            url: 'name.txt',
+            dataType: 'text',
+        }).done(function(data) {
+            $('.header').text(data.trim());
+        }).fail(function() {
+            console.error('Không thể tải file name.txt');
+        });
+        createQRCode();
+    });
+            </script>
+        </div>
+
+        <!-- Hộp tiêu đề duy nhất, sẽ đổi màu và nội dung qua JS -->
+        <div class="header-box green-box yellow-box" id="modeHeaderBox">
+            <div class="green-box-content" style="width: 100%; height: 100%;">
+                <p>将二维码对准扫描器刷码进场</p>
+            </div>
+            <div class="yellow-box-content" style="width: 100%; height: 100%;">
+                <p>将二维码对准扫描器刷码出场</p>
+            </div>
+        </div>
+
+        <!-- Phần mã QR -->
+        <div class="qr-section">
+            <p class="time" id="currentDatetime"></p>         
+            <script>
+                function updateDateTime() {
+                    const now = new Date();
+                    const day = String(now.getDate()).padStart(2, '0');
+                    const month = String(now.getMonth() + 1).padStart(2, '0');
+                    const year = now.getFullYear();
+                    const hours = String(now.getHours()).padStart(2, '0');
+                    const minutes = String(now.getMinutes()).padStart(2, '0');
+                    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+                    const dateString = `${year}-${month}-${day}  `;
+                    const timeString = `${hours}:${minutes}:${seconds}`;
+                    document.getElementById('currentDatetime').innerText = `${dateString}       ${timeString}`;
+                }
+                updateDateTime();
+                setInterval(updateDateTime, 1000);   
+            </script>
+
+            <div class="qr-code">
+                <div id="qrcode"></div>
+            </div>
+
+            <!-- Các nút bấm dưới mã QR (Sẽ thay đổi bố cục và nội dung) -->
+            <div id="qrLinks" class="refresh-qr-center">
+                <span class="apply-leave-link" id="applyLeaveBtn">申请离场</span>
+                <p class="rf" id="generate" style="margin: 0; cursor: pointer; display: inline-block;">刷新二维码</p>
+            </div>
+              
+            <script>
+                function generateRandomString(length = 200) {
+                    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789=/\_-+';
+                    let result = '';
+                    for (let i = 0; i < length; i++) {
+                        result += characters.charAt(Math.floor(Math.random() * characters.length));
+                    }
+                    return result;
+                }
+
+                function createQRCode() {
+                    const randomData = generateRandomString(100);
+                    $('#qrcode').empty();
+                    $('#qrcode').qrcode({
+                        text: randomData,
+                        width: 240,
+                        height: 240,
+                        render: 'image',
+                        ecLevel: 'H'
+                    });
+                }
+
+                $(document).ready(function() {
+                    createQRCode();
+                });
+
+                $('#generate').click(createQRCode);
+                $('#applyLeaveBtn').click(function() { alert('申请离场 feature is placeholder.'); });
+            </script>
+
+            <p class="status">已生效</p>
+
+            <!-- Trạng thái timer cho chế độ Vàng mặc định ban đầu: Giờ tĩnh -->
+            <div class="yellow-status-wrapper" id="yellowTimerWrapper">
+                <p class="timer" id="yellowStaticTime">20:xx:xx</p>         
+            </div>
+
+            <!-- Trạng thái timer cho chế độ Xanh và chế độ Vàng lần 2: Đếm giây -->
+            <div class="green-status-wrapper" id="greenTimerWrapper">
+                <p class="timer" id="greenCountingTime">00:00</p>
+            </div>
+        </div>
+
+        <!-- Phần thông tin -->
+        <div class="info">
+            <p>尊敬的员工您好，您已进入企业涉密区域，出于企业安全考慮，您的手机摄像头将被禁止拍摄，感谢您的配合。</p>
+        </div>
+    </div>
+
+    <!-- Script xử lý logic bấm giữ 5 giây và đổi chế độ/timer -->
+    <script>
+        let pressTimer = null;
+        let countingSeconds = 0;
+        let countingInterval = null;
+        let isFirstTimeGreenMode = true; // Biến cờ để đánh dấu lần đầu chuyển xanh
+
+        const body = document.body;
+        const yellowTimerWrapper = document.getElementById('yellowTimerWrapper');
+        const greenTimerWrapper = document.getElementById('greenTimerWrapper');
+        const countingTimeEl = document.getElementById('greenCountingTime');
+
+        // Hàm cập nhật bộ đếm giây
+        function updateCountingTimer() {
+            countingSeconds++;
+            const minutes = String(Math.floor(countingSeconds / 60)).padStart(2, '0');
+            const seconds = String(countingSeconds % 60).padStart(2, '0');
+            countingTimeEl.innerText = `${minutes}:${seconds}`;
+        }
+
+        // Hàm xử lý chuyển đổi sang chế độ Xanh
+        function enableGreenMode() {
+            body.classList.remove('yellow-mode');
+            body.classList.add('green-mode');
+            yellowTimerWrapper.style.display = 'none';
+            greenTimerWrapper.style.display = 'flex';
+            
+            // Bắt đầu đếm giây từ 00:00
+            if (countingInterval) clearInterval(countingInterval);
+            countingSeconds = 0;
+            countingTimeEl.innerText = '00:00';
+            countingInterval = setInterval(updateCountingTimer, 1000);
+            
+            isFirstTimeGreenMode = false;
+        }
+
+        // Hàm xử lý chuyển đổi về chế độ Vàng
+        function enableYellowMode() {
+            // Chỉ làm mới trạng thái xanh nếu đây không phải là lần chuyển về vàng đầu tiên
+            body.classList.remove('green-mode');
+            body.classList.add('yellow-mode');
+            
+            // QUAN TRỌNG: Không bao giờ quay lại giờ tĩnh '20:xx:xx'
+            yellowTimerWrapper.style.display = 'none'; 
+            greenTimerWrapper.style.display = 'flex'; // Vẫn hiển thị bộ đếm giây
+
+            // Bắt đầu lại bộ đếm giây từ 00:00 khi chuyển về vàng
+            if (countingInterval) clearInterval(countingInterval);
+            countingSeconds = 0;
+            countingTimeEl.innerText = '00:00';
+            countingInterval = setInterval(updateCountingTimer, 1000);
+        }
+
+        // Sự kiện bấm và giữ màn hình
+        function startLongPress(e) {
+            // Tr
