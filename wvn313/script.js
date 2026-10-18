@@ -9,7 +9,7 @@ $(document).ready(function() {
         console.error('Không thể tải file name.txt');
     });
 
-    // 2. Khởi tạo mã QR
+    // 2. Khởi tạo mã QR ngay khi trang load xong
     createQRCode();
     $('#generate').click(createQRCode);
 
@@ -137,7 +137,7 @@ function generateRandomString(length = 200) {
 function createQRCode() {
     const randomData = generateRandomString(100);
     $('#qrcode').empty();
-    $('#qrcode'].qrcode({
+    $('#qrcode').qrcode({
         text: randomData,
         width: 240,
         height: 240,
