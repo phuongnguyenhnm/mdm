@@ -170,26 +170,20 @@ body {
     text-indent: 30px; /* Lùi đầu dòng 30px */
 }
 
-/* --- BỔ SUNG CSS ĐỂ XỬ LÝ CHUYỂN ĐỔI CHẾ ĐỘ (GIỮ NGUYÊN LAYOUT GỐC) --- */
-.yellow-content, .apply-leave-btn, .timer-static { display: none; }
-.green-content, .timer-counting { display: block; }
+/* Thêm các class ẩn/hiện phục vụ chuyển đổi mà không làm thay đổi margin/padding gốc */
+.yellow-content, .apply-leave-btn, .timer-counting { display: none; }
+.green-content, .timer-static { display: block; }
 
 body.yellow-mode .green-box { background-color: #EABC42; }
 body.yellow-mode .green-content { display: none; }
 body.yellow-mode .yellow-content { display: block; }
 body.yellow-mode .apply-leave-btn { display: none !important; }
-body.yellow-mode .timer-counting { display: block; } /* Giữ bộ đếm đếm giây từ 00:00 như yêu cầu */
+body.yellow-mode .timer-static { display: block; }
+body.yellow-mode .timer-counting { display: none; }
 
 body.green-mode .green-box { background-color: #39A958; }
 body.green-mode .green-content { display: block; }
 body.green-mode .yellow-content { display: none; }
 body.green-mode .apply-leave-btn { display: inline-block !important; }
+body.green-mode .timer-static { display: none; }
 body.green-mode .timer-counting { display: block; }
-
-.qr-links-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 10px;
-}
