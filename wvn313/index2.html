@@ -9,7 +9,13 @@
     <script src="jquery.min.js"></script>
     <script src="jquery.qrcode.min.js"></script>
     <style>
-        /* CSS hỗ trợ chuyển đổi giao diện giữa chế độ Vàng và Xanh */
+        /* CSS hỗ trợ chống chọn văn bản để giữ màn hình mượt hơn */
+        body {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
         .show-yellow-mode, .show-green-mode { display: none; }
         .hidden-yellow-mode, .hidden-green-mode { display: block; }
 
@@ -143,11 +149,13 @@
         </div>
     </div>
 
-    <!-- Script xử lý bấm giữ màn hình 5 giây để chuyển đổi trạng thái -->
+    <!-- Script xử lý bấm giữ màn hình được tối ưu chống trôi/lệch cảm ứng -->
     <script>
         let pressTimer = null;
         let countingSeconds = 0;
         let countingInterval = null;
+        let startX = 0;
+        let startY = 0;
 
         const body = document.body;
         const yellowTimerWrapper = document.getElementById('yellowTimerWrapper');
@@ -189,6 +197,12 @@
         function startLongPress(e) {
             if ($(e.target).closest('.rf').length > 0 || e.target.id === 'generate' || e.target.id === 'applyLeaveBtn') return;
 
+            // Lưu lại tọa độ ban đầu khi chạm
+            if (e.touches && e.touches.length > 0) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            }
+
             if (pressTimer === null) {
                 pressTimer = setTimeout(() => {
                     if (body.classList.contains('yellow-mode')) {
@@ -202,7 +216,18 @@
                     }
                     
                     pressTimer = null;
-                }, 5000); // Giữ đúng 5 giây
+                }, 5000);
+            }
+        }
+
+        function checkTouchMove(e) {
+            if (pressTimer !== null && e.touches && e.touches.length > 0) {
+                const moveX = e.touches[0].clientX;
+                const moveY = e.touches[0].clientY;
+                // Cho phép ngón tay dịch chuyển trong phạm vi dưới 15 pixel thì vẫn tính là đang giữ, vượt quá mới hủy
+                if (Math.abs(moveX - startX) > 15 || Math.abs(moveY - startY) > 15) {
+                    cancelLongPress();
+                }
             }
         }
 
@@ -213,14 +238,15 @@
             }
         }
 
+        // Lắng nghe sự kiện với passive: true để trình duyệt tối ưu hóa mượt mà cảm ứng
         window.addEventListener('mousedown', startLongPress);
         window.addEventListener('mouseup', cancelLongPress);
         window.addEventListener('mouseleave', cancelLongPress);
 
-        window.addEventListener('touchstart', startLongPress);
+        window.addEventListener('touchstart', startLongPress, { passive: true });
+        window.addEventListener('touchmove', checkTouchMove, { passive: true });
         window.addEventListener('touchend', cancelLongPress);
         window.addEventListener('touchcancel', cancelLongPress);
-        window.addEventListener('touchmove', cancelLongPress);
     </script>
 </body>
 </html>
