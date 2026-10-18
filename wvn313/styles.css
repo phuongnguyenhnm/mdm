@@ -33,6 +33,42 @@ body {
     justify-content: flex-start;
     align-items: center;
 }
+
+.green-box {
+        background-color: #39A958;
+	width: 295px;
+    	height: 72px;
+	position: relative;
+ 	border-radius: 8px;
+ 	display: flex;
+ 	justify-content: center;
+    	align-items: center;
+        border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+.green-box::before,
+.green-box::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    background-color: #38394C; /* Màu nền */
+    top: 100%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
+
+.green-box::before {
+    left: 0;
+    margin-left: -5px; /* Đặt vị trí khuyết bên trái */
+}
+
+.green-box::after {
+    right: 0;
+    margin-right: -5px; /* Đặt vị trí khuyết bên phải */
+}
+
+
 .yellow-box {
         background-color: #EABC42;
 	width: 295px;
