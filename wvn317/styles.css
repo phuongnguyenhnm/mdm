@@ -33,6 +33,42 @@ body {
     justify-content: flex-start;
     align-items: center;
 }
+
+.green-box {
+        background-color: #39A958;
+	width: 295px;
+    	height: 72px;
+	position: relative;
+ 	border-radius: 8px;
+ 	display: flex;
+ 	justify-content: center;
+    	align-items: center;
+        border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+.green-box::before,
+.green-box::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    background-color: #38394C; /* Màu nền */
+    top: 100%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
+
+.green-box::before {
+    left: 0;
+    margin-left: -5px; /* Đặt vị trí khuyết bên trái */
+}
+
+.green-box::after {
+    right: 0;
+    margin-right: -5px; /* Đặt vị trí khuyết bên phải */
+}
+
+
 .yellow-box {
         background-color: #EABC42;
 	width: 295px;
@@ -133,3 +169,20 @@ body {
     text-align: left; /* Căn trái cho văn bản */
     text-indent: 30px; /* Lùi đầu dòng 30px */
 }
+
+/* Trạng thái ban đầu khi mới mở web (hiển thị giờ tĩnh, ẩn bộ đếm giây) */
+body.yellow-mode .green-box { background-color: #EABC42; }
+body.yellow-mode .green-content { display: none; }
+body.yellow-mode .yellow-content { display: block; }
+body.yellow-mode .apply-leave-btn { display: none !important; }
+body.yellow-mode .timer-static { display: block; }
+body.yellow-mode .timer-counting { display: none; }
+
+/* Trạng thái sau khi đã bấm giữ chuyển đổi (dù là sang xanh hay quay lại vàng đều hiển thị bộ đếm giây) */
+body.switched-mode .timer-static { display: none !important; }
+body.switched-mode .timer-counting { display: block !important; }
+
+body.green-mode .green-box { background-color: #39A958; }
+body.green-mode .green-content { display: block; }
+body.green-mode .yellow-content { display: none; }
+body.green-mode .apply-leave-btn { display: inline-block !important; }
