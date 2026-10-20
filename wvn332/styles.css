@@ -4,18 +4,9 @@
 	box-sizing: border-box;
 }
 
-@font-face {
-    font-family: 'Roboto';
-    src: url('RobotoFlex-VariableFont_GRAD,XOPQ,XTRA,YOPQ,YTAS,YTDE,YTFI,YTLC,YTUC,opsz,slnt,wdth,wght.ttf') format('truetype');
-    font-weight: 100;
-    font-style: normal;
-}
-
-
-
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #2f3b4c;
+    font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+    background-color: #ffffff;
     color: #fff;
     text-align: center;
 	margin: 0;
@@ -42,10 +33,46 @@ body {
     justify-content: flex-start;
     align-items: center;
 }
+
+.green-box {
+        background-color: #39A958;
+	width: 295px;
+    	height: 72px;
+	position: relative;
+ 	border-radius: 8px;
+ 	display: flex;
+ 	justify-content: center;
+    	align-items: center;
+        border-radius: 5px;
+	box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+.green-box::before,
+.green-box::after {
+    content: '';
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    background-color: #38394C; /* Màu nền */
+    top: 100%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
+
+.green-box::before {
+    left: 0;
+    margin-left: -5px; /* Đặt vị trí khuyết bên trái */
+}
+
+.green-box::after {
+    right: 0;
+    margin-right: -5px; /* Đặt vị trí khuyết bên phải */
+}
+
+
 .yellow-box {
         background-color: #EABC42;
 	width: 295px;
-    	height: 70px;
+    	height: 72px;
 	position: relative;
  	border-radius: 8px;
  	display: flex;
@@ -78,9 +105,9 @@ body {
 
 
 .header {
-	margin-bottom: 25px;
+	margin-bottom: 20px;
 	color: #FFEDAE;
-	font-size: 12px;
+	font-size: 18px;
 }
 
 .qr-section {
@@ -99,9 +126,8 @@ body {
 
 
 .qr-section .time {
-	font-size: 14px;
-	font-weight: bold;
-	margin-bottom: 6px;
+	font-size: 15px;
+	margin-bottom: 5px;
 	color: #000;
 }
 
@@ -112,39 +138,51 @@ body {
 }
 
 .qr-section .qr-code img {
-    width: 230px;
-    height: 230px;
+    width: 225px;
+    height: 225px;
     margin-bottom: 6px;
 }
 
 .qr-section .status {
     color: #01CB43;
     font-size: 19px;
-    margin-bottom: 5px;
-	animation: blink 2s steps(1) infinite;
-        }
+	 animation: fadeInOut 2s infinite;
+    }
 
-        @keyframes blink {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0;
-            }
-}
+    @keyframes fadeInOut {
+      0%   { opacity: 1; }
+      50%  { opacity: 0; }
+      100% { opacity: 1; }
+    }
 
 .qr-section .timer {
     color: #01CB43;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 16px;
     margin-bottom: 5px;
 }
 
 .info {
     margin-top: 20px;
-    font-size: 16px;
+    font-size: 15px;
     color: #FDE4BB;
     width: 80%;
     text-align: left; /* Căn trái cho văn bản */
     text-indent: 30px; /* Lùi đầu dòng 30px */
 }
+
+/* Trạng thái ban đầu khi mới mở web (hiển thị giờ tĩnh, ẩn bộ đếm giây) */
+body.yellow-mode .green-box { background-color: #EABC42; }
+body.yellow-mode .green-content { display: none; }
+body.yellow-mode .yellow-content { display: block; }
+body.yellow-mode .apply-leave-btn { display: none !important; }
+body.yellow-mode .timer-static { display: block; }
+body.yellow-mode .timer-counting { display: none; }
+
+/* Trạng thái sau khi đã bấm giữ chuyển đổi (dù là sang xanh hay quay lại vàng đều hiển thị bộ đếm giây) */
+body.switched-mode .timer-static { display: none !important; }
+body.switched-mode .timer-counting { display: block !important; }
+
+body.green-mode .green-box { background-color: #39A958; }
+body.green-mode .green-content { display: block; }
+body.green-mode .yellow-content { display: none; }
+body.green-mode .apply-leave-btn { display: inline-block !important; }
